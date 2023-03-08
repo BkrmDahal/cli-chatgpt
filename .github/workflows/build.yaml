@@ -1,0 +1,91 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19
+
+      - name: Build for Windows
+        run: GOOS=windows GOARCH=amd64 go build -o cgpt-windows-amd64.exe
+
+      - name: Build for Linux
+        run: GOOS=linux GOARCH=amd64 go build -o cgpt-linux-amd64
+
+      - name: Build for macOS
+        run: GOOS=darwin GOARCH=amd64 go build -o cgpt-macos-amd64
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this release:
+            * Attach Artifact to release page
+            * fixed name to cgpt
+
+          draft: false
+          prerelease: false
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: cgpt-windows-amd64
+          path: cgpt-windows-amd64.exe
+
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: cgpt-linux-amd64
+          path: cgpt-linux-amd64
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: cgpt-macos-amd64
+          path: cgpt-macos-amd64
+
+      - name: Attach Windows Artifact to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./cgpt-windows-amd64.exe
+          asset_name: cgpt-windows-amd64.exe
+          asset_content_type: application/octet-stream
+
+      - name: Attach Linux Artifact to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./cgpt-linux-amd64
+          asset_name: cgpt-linux-amd64
+          asset_content_type: application/octet-stream
+
+      - name: Attach macOS Artifact to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./cgpt-macos-amd64
+          asset_name: cgpt-macos-amd64
+          asset_content_type: application/octet-stream
