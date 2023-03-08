@@ -1,0 +1,61 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19
+
+      - name: Build for Windows
+        run: GOOS=windows GOARCH=amd64 go build -o myprogram-windows-amd64.exe
+
+      - name: Build for Linux
+        run: GOOS=linux GOARCH=amd64 go build -o myprogram-linux-amd64
+
+      - name: Build for macOS
+        run: GOOS=darwin GOARCH=amd64 go build -o myprogram-macos-amd64
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this release:
+            * added -c and -sc
+
+          draft: false
+          prerelease: false
+
+      - name: Upload Windows Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: myprogram-windows-amd64
+          path: myprogram-windows-amd64.exe
+
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: myprogram-linux-amd64
+          path: myprogram-linux-amd64
+
+      - name: Upload macOS Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: myprogram-macos-amd64
+          path: myprogram-macos-amd64
