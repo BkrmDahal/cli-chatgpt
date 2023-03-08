@@ -18,13 +18,13 @@ jobs:
           go-version: 1.19
 
       - name: Build for Windows
-        run: GOOS=windows GOARCH=amd64 go build -o myprogram-windows-amd64.exe
+        run: GOOS=windows GOARCH=amd64 go build -o cgpt-windows-amd64.exe
 
       - name: Build for Linux
-        run: GOOS=linux GOARCH=amd64 go build -o myprogram-linux-amd64
+        run: GOOS=linux GOARCH=amd64 go build -o cgpt-linux-amd64
 
       - name: Build for macOS
-        run: GOOS=darwin GOARCH=amd64 go build -o myprogram-macos-amd64
+        run: GOOS=darwin GOARCH=amd64 go build -o cgpt-macos-amd64
 
       - name: Create Release
         id: create_release
@@ -44,17 +44,17 @@ jobs:
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: myprogram-windows-amd64
-          path: myprogram-windows-amd64.exe
+          name: cgpt-windows-amd64
+          path: cgpt-windows-amd64.exe
 
       - name: Upload Linux Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: myprogram-linux-amd64
-          path: myprogram-linux-amd64
+          name: cgpt-linux-amd64
+          path: cgpt-linux-amd64
 
       - name: Upload macOS Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: myprogram-macos-amd64
-          path: myprogram-macos-amd64
+          name: cgpt-macos-amd64
+          path: cgpt-macos-amd64
