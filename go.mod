@@ -1,3 +1,3 @@
-module gchat
+module cgpt
 
 go 1.19

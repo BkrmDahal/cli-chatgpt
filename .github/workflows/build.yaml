@@ -37,6 +37,7 @@ jobs:
           body: |
             Changes in this release:
             * Attach Artifact to release page
+            * fixed name to cgpt
 
           draft: false
           prerelease: false
