@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	flag "github.com/spf13/pflag"
 	"log"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -44,7 +45,7 @@ type Choice struct {
 }
 
 func GetApiKey() (string, error) {
-	apiKey := os.Getenv("OPENAI_API_KEY")
+	apiKey := os.Getenv("OPENAI_API_KEYS")
 	if len(apiKey) == 0 {
 		apiKey = config.SaveOrGetToken()
 		// return "", errors.New("set env variable `OPENAI_API_KEY`")
@@ -60,7 +61,7 @@ func main() {
 	code_bool := flag.BoolP("code", "c", false, "Flag to just get code.")
 	json_bool := flag.BoolP("json", "j", false, "Flag to just get json.")
 	grammar_bool := flag.BoolP("grammar", "g", false, "Flag to fix grammar of text.")
-	debug := flag.BoolP("debug", "d", false, "Print query, System context and Response.")
+	debug := flag.BoolP("debug", "d", false, "Print query, system context and response.")
 	flag.Parse()
 	
 	args := flag.Args()
@@ -77,9 +78,9 @@ func main() {
 
 	//make System context base on flag
 	if *code_bool {
-		system_content_final = "Just get the code no explaination or other text"
+		system_content_final = "Get the code. Absolutely no explaination or other text."
 	} else if *json_bool {
-		system_content_final = "Do infromation extraction and make it detailed. Just Json output"
+		system_content_final = "Do information extraction and make it detailed. Just Json output"
 	} else if  *grammar_bool {
 		system_content_final = "Fixed the grammar and make it better for formal conversation."
 	} else {
@@ -142,9 +143,10 @@ func main() {
 		log.Println("Query: ", query)
 		log.Println("System Content: ", system_content_final)
 		log.Println("Response: ", completionResponse)
+		log.Println("==========================")
 		}
 
 	for _, choice := range completionResponse.Choices {
-		log.Println(choice.Message.Content)
+		fmt.Println(choice.Message.Content)
 	}
 }

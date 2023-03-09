@@ -36,11 +36,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           body: |
             Changes in this release:
-            * Grammer fix
-            * Allow query without flag
-            * change flat to q
-            * added more flag for most used system context
-            * Pass key using cli only
+            * fix fmt issue on output
+            * added issue and tip in readme
 
           draft: false
           prerelease: false
