@@ -50,3 +50,13 @@ cgpt -c "write python code to make https request to weather api"
 - Fix grammar and write better email using cli only. 
 - First point of contact before google. 
 
+### Need Help
+- [] write better system context
+- [] Add more system context
+- [] Add more parameters
+- [] add test cases
+- [] Refeactor code
+
+
+### Disclaimer 
+I am currently in the process of learning golang and hate pointers. As a result, my code may not be structured optimally. However, I intend to refactor it as I become more proficient in the language.

@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"cgpt/config"
+	"github.com/BkrmDahal/cli-chatgpt/config"
 )
 
 // request struct
