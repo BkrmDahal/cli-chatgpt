@@ -36,8 +36,11 @@ jobs:
           release_name: Release ${{ github.ref }}
           body: |
             Changes in this release:
-            * Attach Artifact to release page
-            * fixed name to cgpt
+            * Grammer fix
+            * Allow query without flag
+            * change flat to q
+            * added more flag for most used system context
+            * Pass key using cli only
 
           draft: false
           prerelease: false
