@@ -40,9 +40,9 @@ cgpt -c "write python code to make https request to weather api"
 ```
 
 ## Issue
-1. On Mac got "cannot be opened because the developer cannot be verified."
-Solution 1: Build locally and move the file
-Solution 2: Close close the popup. Open System Preferences > Security & Privacy > General, and clicking on the "Allow Anyway" button. 
+1. On Mac getting "cannot be opened because the developer cannot be verified."  
+Solution 1: Build locally and move the file  
+Solution 2: Close the popup. Open System Preferences > Security & Privacy > General, and clicking on the "Allow Anyway" button. 
 ![image](https://i.imgur.com/Hnhk2I7.png)
 When asked again. Click on open.
 
