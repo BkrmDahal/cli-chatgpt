@@ -44,7 +44,7 @@ type Choice struct {
 }
 
 func GetApiKey() (string, error) {
-	apiKey := os.Getenv("OPENAI_API_KEYS")
+	apiKey := os.Getenv("OPENAI_API_KEY")
 	if len(apiKey) == 0 {
 		apiKey = config.SaveOrGetToken()
 		// return "", errors.New("set env variable `OPENAI_API_KEY`")
